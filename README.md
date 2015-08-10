@@ -1,10 +1,9 @@
-
 [![dockeri.co](http://dockeri.co/image/flangelier/kafka)](https://registry.hub.docker.com/u/flangelier/kafka/)
 
 [![stars](https://img.shields.io/github/stars/apache/kafka.svg) ![forks](https://img.shields.io/github/forks/apache/kafka.svg) ![issues](https://img.shields.io/github/issues/apache/kafka.svg) ](https://github.com/apache/kafka)
 
 # Supported tags and respective `Dockerfile` links
-- [`0.8.2.1`,`latest`(/Dockerfile)](https://github.com/flangelier/docker-kafka/0.8.2.1/broker/Dockerfile)
+- [`0.8.2.1`,`latest`(0.8.2.1/broker/Dockerfile)](https://github.com/flangelier/docker-kafka/0.8.2.1/broker/Dockerfile)
 
 # What is Kafka?
 Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
@@ -20,21 +19,24 @@ Kafka has a modern cluster-centric design that offers strong durability and faul
 # How to use this image?
 ### Zookeeper
 This image need a zookeeper server to run. Although, you could use any zookeeper, we suggest you to use this docker image [wurstmeister/zookeeper:latest](https://hub.docker.com/r/wurstmeister/zookeeper/).
-    `docker run -d -p 2181:2181 -P --name zookeeper wurstmeister/zookeeper:latest`
+
+    docker run -d -p 2181:2181 -P --name zookeeper wurstmeister/zookeeper:latest
+
 ### Suggested way to use the image
 If you want to use the image the way it was meant to be, you chould pull those images
-    ```
+
     docker pull busybox:latest
     docker pull flangelier/configure
     docker pull flangelier/kafka
-    ```
+
 Then you should execute those lines for launching a broker
-    `export CURRENT_BROKER_ID=1`
-    ```
+
+    export CURRENT_BROKER_ID=1
+
     docker run -d -v /kafka --name kafka-data-$CURRENT_BROKER_ID busybox:latest
     docker run --rm --volumes-from kafka-data-$CURRENT_BROKER_ID flangelier/configure broker.id=$CURRENT_BROKER_ID
     docker run -d --volumes-from kafka-data-$CURRENT_BROKER_ID --link zookeeper:zk -P --name kafka-broker-$CURRENT_BROKER_ID flangelier/kafka
-    ```
+
 If you want more brokers, just rerun the same lines as many time as you want, just don't forget to change the CURRENT_BROKER_ID value everytime you want a new broker
 
 # License
@@ -62,4 +64,3 @@ If you have any problems with or questions about this image, please contact us t
 You are invited to contribute new features, fixes, or updates, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
 
 Before you start to code, we recommend discussing your plans through a [GitHub issue](https://github.com/flangelier/docker-kafka/issues), especially for more ambitious contributions. This gives other contributors a chance to point you in the right direction, give you feedback on your design, and help you find out if someone else is working on the same thing.
-
